@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {Component} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-hello',
@@ -9,5 +9,18 @@ import { CommonModule } from '@angular/common';
   styleUrl: './hello.component.scss'
 })
 export class HelloComponent {
+
+  version: string = '';
+
+  constructor() {
+    this.getVersion().then((version) => {
+      this.version = version;
+    });
+  }
+
+  private async getVersion(): Promise<string> {
+    const data = await fetch('/api/version');
+    return (await data.text()) ?? 'error';
+  }
 
 }
